@@ -46,13 +46,13 @@ def group_images_by_well_position(images):
 def add_images_to_plate(conn, images, plate_id, remove_from=None):
     """
     Add the Images to a Plate at their specific well positions extracted from the file names.
-    Allows up to 2 images per well.
+    Allows an unlimited number of images per well.
     """
     update_service = conn.getUpdateService()
 
     grouped_images = group_images_by_well_position(images)
 
-    for (row_str, col), grouped_images in grouped_images.items():
+    for (row_str, col), imgs_in_group in grouped_images.items():
         row = ord(row_str) - ord('A')  # Convert row letter to 0-based index (e.g., A -> 0, B -> 1)
         col -= 1  # Adjust column to 0-based index
 
@@ -61,7 +61,7 @@ def add_images_to_plate(conn, images, plate_id, remove_from=None):
         well.column = rint(col)
         well.row = rint(row)
 
-        for image in grouped_images[:2]:  # Limit to 2 images per well
+        for image in imgs_in_group:  # No limit on number of images per well
             ws = omero.model.WellSampleI()
             ws.image = omero.model.ImageI(image.id, False)
             ws.well = well
