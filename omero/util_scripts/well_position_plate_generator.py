@@ -212,10 +212,10 @@ And automatically assign the image to a plate based on the well position in the 
             description="Remove Images from Dataset as they are added to"
             " Plate"),
 
-        version="4.3.2",
-        authors=["William Moore", "OME Team"],
-        institutions=["University of Dundee"],
-        contact="ome-users@lists.openmicroscopy.org.uk",
+        version="0.9",
+        authors=["Riccardo Massei"],
+        institutions=["UFZ - Center for Environmental Research"],
+        contact="riccardo.massei@ufz.de",
     )
 
     try:
