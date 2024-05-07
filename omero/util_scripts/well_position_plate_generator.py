@@ -22,9 +22,9 @@ from omero.rtypes import rint, rstring, robject, unwrap, rlong
 def parse_well_position_from_filename(filename):
     """
     Extract well position from filename using regex.
-    Expected format includes [Letter][Number] as a part of the filename, where the well position could be embedded anywhere (e.g., image_A2_file.tiff or snapshot_A02.png).
+    Expected format includes [Letter][Number] as a part of the filename, where the well position could be embedded anywhere (e.g., image_A2_file.tiff, image-A2-file.tiff, A2_file.png, etc.).
     """
-    match = re.search(r"(?:^|_)([A-Z])(\d{2})(?:_|$)", filename)
+    match = re.search(r"(?:^|[_-])([A-Z])(\d{1,2})(?:[_-]|$)", filename)
     if match:
         row, col = match.groups()
         return row, int(col)
