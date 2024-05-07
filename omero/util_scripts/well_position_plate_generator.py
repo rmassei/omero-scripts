@@ -22,14 +22,14 @@ from omero.rtypes import rint, rstring, robject, unwrap, rlong
 def parse_well_position_from_filename(filename):
     """
     Extract well position from filename using regex.
-    Expected format is [Letter][Number]_file.tiff (e.g., A2_file.tiff or A02_file.tiff)
+    Expected format includes [Letter][Number] as a part of the filename, where the well position could be embedded anywhere (e.g., image_A2_file.tiff or snapshot_A02.png).
     """
-    match = re.search(r"([A-Za-z]+)(\d+)", filename)
+    match = re.search(r"(?:^|_)([A-Z])(\d{2})(?:_|$)", filename)
     if match:
         row, col = match.groups()
-        return row.upper(), int(col)
+        return row, int(col)
     return None, None
-
+    
 def group_images_by_well_position(images):
     """
     Groups images by their well positions extracted from file names.
@@ -212,10 +212,10 @@ And automatically assign the image to a plate based on the well position in the 
             description="Remove Images from Dataset as they are added to"
             " Plate"),
 
-        version="0.9",
-        authors=["Riccardo Massei"],
-        institutions=["UFZ - Center for Environmental Research"],
-        contact="riccardo.massei@ufz.de",
+        version="4.3.2",
+        authors=["William Moore", "OME Team"],
+        institutions=["University of Dundee"],
+        contact="ome-users@lists.openmicroscopy.org.uk",
     )
 
     try:
@@ -237,3 +237,4 @@ And automatically assign the image to a plate based on the well position in the 
 
 if __name__ == "__main__":
     run_script()
+
